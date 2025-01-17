@@ -9,16 +9,18 @@ socket.addEventListener("open", () => {
   const subscriptionMessage = {
     APIkey: API_KEY,
     BoundingBoxes: [
-    // Atlantic Ocean
-    [[-80, -40], [-20, 40]],
+    // Bounding Box from 180°W to 120°W (Ocean region)
+[[-180, -90], [-120, 90]]
+      // Atlantic Ocean
+    //[[-80, -40], [-20, 40]],
     // Pacific Ocean (North)
-    [[120, -10], [180, 60]],
+    //[[120, -10], [180, 60]],
     // Pacific Ocean (South)
-    [[-180, -60], [-80, 0]],
+    //[[-180, -60], [-80, 0]],
     // Indian Ocean
-    [[20, -40], [120, 30]],
+    //[[20, -40], [120, 30]],
     // Southern Ocean
-    [[-180, -90], [180, -60]],
+    //[[-180, -90], [180, -60]],
     ],
   };
   console.log(JSON.stringify(subscriptionMessage));
