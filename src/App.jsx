@@ -42,7 +42,7 @@ function App() {
         pointLat="Latitude"  // The property from the JSON to use for latitude
         pointLng="Longitude" // The property from the JSON to use for longitude
         pointAltitude={() => 0.1}  // Set the altitude of the points (optional)
-        pointRadius={0.001}  // Set the radius of the points
+        pointRadius={0.1}  // Set the radius of the points
         pointColor={() => '#FF0000'}  // Customize the color of the points (e.g., red)
         pointLabel={(d) => `${d.ShipId}`}  // Customize the label for each point (e.g., show ShipId)
       />
