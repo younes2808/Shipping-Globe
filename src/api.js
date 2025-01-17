@@ -4,7 +4,7 @@ import fs from "fs";  // To write the JSON file
 const socket = new WebSocket("wss://stream.aisstream.io/v0/stream");
 
 // Replace process.env.AISSTREAM_API_KEY with your actual API key
-const API_KEY = "9ae7ab0f44f03c778ea82454b5887ae3c115c14f";
+const API_KEY = "";
 
 // To store the ship position data
 let shipPositions = [];
