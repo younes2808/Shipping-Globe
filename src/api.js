@@ -15,17 +15,45 @@ socket.addEventListener("open", () => {
   const subscriptionMessage = {
     APIkey: API_KEY,
     BoundingBoxes: [
-      // Atlantic Ocean
-      [[-80, -40], [-20, 40]],
-      // Pacific Ocean (North)
-      [[120, -10], [180, 60]],
-      // Pacific Ocean (South)
-      [[-180, -60], [-80, 0]],
-      // Indian Ocean
-      [[20, -40], [120, 30]],
-      // Southern Ocean
-      [[-180, -90], [180, -60]],
-    ],
+        // Atlantic Ocean
+        [[-80, -40], [-20, 40]],
+        
+        // Pacific Ocean (North)
+        [[120, -10], [180, 60]],
+        
+        // Pacific Ocean (South)
+        [[-180, -60], [-80, 0]],
+        
+        // Indian Ocean
+        [[20, -40], [120, 30]],
+        
+        // Southern Ocean
+        [[-180, -90], [180, -60]],
+        
+        // Arctic Ocean (North)
+        [[-180, 60], [180, 90]],
+        
+        // North America (Continent)
+        [[-170, 24], [-60, 85]],
+        
+        // South America (Continent)
+        [[-80, -60], [-30, 15]],
+        
+        // Europe (Continent)
+        [[-30, 35], [50, 72]],
+        
+        // Africa (Continent)
+        [[-20, -40], [60, 40]],
+        
+        // Asia (Continent)
+        [[60, 10], [180, 80]],
+        
+        // Australia (Continent)
+        [[110, -50], [155, -10]],
+        
+        // Antarctica (Continent)
+        [[-180, -90], [180, -60]]
+      ]
   };
   console.log("Sending subscription message...");
   socket.send(JSON.stringify(subscriptionMessage));
