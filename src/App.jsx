@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Globe from 'react-globe.gl';
+import * as THREE from 'three';  // Import THREE for 3D objects
 import './App.css';
 
 function App() {
@@ -8,10 +9,22 @@ function App() {
   const [height, setHeight] = useState(window.innerHeight);
   const [shipPositions, setShipPositions] = useState([]);  // State to store ship position data
 
-  // Handle resizing and maintaining the size of the globe
   const handleResize = () => {
     setWidth(window.innerWidth);
     setHeight(window.innerHeight);
+  };
+
+  const handleZoomChange = (zoomLevel) => {
+    console.log('Current Zoom Level:', zoomLevel);  // Log the zoom level
+  };
+
+  // Function to create a 3D boat model
+  const createBoatObject = () => {
+    const boatGeometry = new THREE.ConeGeometry(0.0125, 0.05, 32);
+    const boatMaterial = new THREE.MeshStandardMaterial({ color: 'blue' });
+    const boat = new THREE.Mesh(boatGeometry, boatMaterial);
+    boat.rotation.x = Math.PI / 2;  // Adjust orientation to stand upright
+    return boat;
   };
 
   useEffect(() => {
@@ -35,16 +48,17 @@ function App() {
   return (
     <div className="cursor-move">
       <Globe
-        globeTileEngineUrl={(x, y, l) => `https://tile.openstreetmap.org/${l}/${x}/${y}.png`}  // Set the globe tile URL
-        width={width}  // Set width dynamically
-        height={height} // Set height dynamically
-        pointsData={shipPositions}  // Pass ship positions as points data
-        pointLat="Latitude"  // The property from the JSON to use for latitude
-        pointLng="Longitude" // The property from the JSON to use for longitude
-        pointAltitude={() => 0.1}  // Set the altitude of the points (optional)
-        pointRadius={0.1}  // Set the radius of the points
-        pointColor={() => '#FF0000'}  // Customize the color of the points (e.g., red)
-        pointLabel={(d) => `${d.ShipId}`}  // Customize the label for each point (e.g., show ShipId)
+        globeTileEngineUrl={(x, y, l) => `https://tile.openstreetmap.org/${l}/${x}/${y}.png`} 
+        width={width}  
+        height={height}
+        objectsData={shipPositions} 
+        objectLat={(d) => d.Latitude}  // Use Latitude from data
+        objectLng={(d) => d.Longitude}  // Use Longitude from data
+        objectAltitude={0}
+        objectColor={() => '#FF0000'}  
+        objectLabel={(d) => `${d.ShipId}`}  
+        onZoom={handleZoomChange}  
+        objectThreeObject={createBoatObject}  
       />
     </div>
   );
