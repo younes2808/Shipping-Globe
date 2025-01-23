@@ -15,18 +15,37 @@ function App() {
   };
 
   const handleZoomChange = (zoomLevel) => {
-    console.log('Current Zoom Level:', zoomLevel);  // Log the zoom level
+    const altitude = zoomLevel.altitude; // Hent altitude fra zoomLevel
+    console.log('Current Altitude:', altitude);
+  
+    // Beregn baseScale basert på altitude
+    const baseScale = 0.1;
+    const adjustedScale = Math.max(0.05, baseScale / altitude); // Juster skalaen dynamisk
+  
+    console.log('Adjusted Scale:', adjustedScale);
+    
+    // Oppdater skalaen på båtene (hvis nødvendig)
+    // Du kan lagre dette i en state eller direkte på objektet hvis det er mulig i din implementasjon
   };
+  
 
   // Function to create a 3D boat model
-  const createBoatObject = () => {
-    const boatGeometry = new THREE.ConeGeometry(0.0125, 0.05, 32);
-    const boatMaterial = new THREE.MeshStandardMaterial({ color: 'blue' });
-    const boat = new THREE.Mesh(boatGeometry, boatMaterial);
-    boat.rotation.x = Math.PI / 2;  // Adjust orientation to stand upright
-    return boat;
+  const createBoatObject = (zoomLevel) => {
+    const altitude = zoomLevel.altitude;
+  
+    // Beregn skalaen for ikonets høyde basert på altitude
+    const baseScale = 0.005;  // Grunnleggende skala for x-aksen
+    const yScale = Math.max(0.005, baseScale * altitude);  // Juster y-aksen med minimumsgrense for synlighet
+  
+    const textureLoader = new THREE.TextureLoader();
+    const boatTexture = textureLoader.load('/icons8-ship-100.png'); // Path to your boat icon
+    const spriteMaterial = new THREE.SpriteMaterial({ map: boatTexture });
+    const boatSprite = new THREE.Sprite(spriteMaterial);
+    // Sett skalaen separat for x- og y-aksen
+    boatSprite.scale.set(0.05, 0.05);  // x-aksen bruker baseScale, y-aksen bruker tilpasset skala
+    return boatSprite;
   };
-
+  
   useEffect(() => {
     // Add event listener for resizing
     window.addEventListener('resize', handleResize);
@@ -52,14 +71,14 @@ function App() {
         width={width}  
         height={height}
         objectsData={shipPositions} 
-        objectLat={(d) => d.Latitude}  // Use Latitude from data
-        objectLng={(d) => d.Longitude}  // Use Longitude from data
+        objectLat={(d) => d.Latitude}  // Bruk Latitude fra data
+        objectLng={(d) => d.Longitude}  // Bruk Longitude fra data
         objectAltitude={0}
-        objectColor={() => '#FF0000'}  
         objectLabel={(d) => `${d.ShipId}`}  
         onZoom={handleZoomChange}  
-        objectThreeObject={createBoatObject}  
+        objectThreeObject={createBoatObject}  // Bruk den nye båt-ikon-funksjonen
       />
+
     </div>
   );
 }
