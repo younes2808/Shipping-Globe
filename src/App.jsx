@@ -124,6 +124,7 @@ function App() {
         pathColor={(d) => d.properties.color}
         pathDashLength={0.1}
         pathDashGap={0.008}
+        pathStroke={0.5} // Reduce stroke width
         pathDashAnimateTime={12000}
       />
     </div>
